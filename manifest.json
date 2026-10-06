@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Atender Native Infinity - F4 Global",
+  "version": "6.8",
+  "description": "Notificação flutuante instantânea em todas as abas e botões discretos no lado esquerdo.",
+  "permissions": ["tabs", "scripting", "windows", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "minimum_chrome_version": "111",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Native Infinity - clique para mutar/desmutar o microfone"
+  },
+  "commands": {
+    "alternar-modo-silencioso": {
+      "description": "Modo Silencioso"
+    },
+    "disparar-atendimento-global": {
+      "description": "Atender ligação com F4"
+    },
+    "alternar-mudo-microfone": {
+      "suggested_key": {
+        "default": "Alt+Shift+M"
+      },
+      "description": "Mutar/desmutar o microfone"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.native-infinity.com.br/*"],
+      "js": ["mic-hook.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ]
+}
